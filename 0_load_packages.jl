@@ -11,16 +11,22 @@ packages = [
     "Dates"
 ]
 
-#?Function loading and installing packages
+#Function loading and installing packages
 
-function install_and_load_packages(packages)
-    for package in packages
-        if !haskey(Pkg.installed(), package)
-            Pkg.add(package)
+function install_and_load_packages(pkgs)
+    for pkg in pkgs
+        # Try loading the package, and install it if it fails
+        #Julia quite tricky when using ai to predict code as 
+        #it is a dynamic language and constantly changing
+        try
+            @eval using $(Symbol(pkg))
+        catch 
+            inport pkgPkg.add(pkg)
+            @eval using $(Symbol(pkg))
         end
-        using Symbol(package)
     end
 end
-# Call the function to load packages
+
+# Call the function to install and load packages
 
 install_and_load_packages(packages)
