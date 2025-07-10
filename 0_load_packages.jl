@@ -4,14 +4,18 @@ packages = [
     "DataFrames",
     "CSV",
     "Plots",
+    "MLDataUtils",
+    "StatsBase",
     "StatsPlots",
     "Flux",
     "TensorFlow",
     "StringManipulation",
+    "Random",
     "Dates"
 ]
 
 #Function loading and installing packages
+import Pkg
 
 function install_and_load_packages(pkgs)
     for pkg in pkgs
@@ -21,12 +25,14 @@ function install_and_load_packages(pkgs)
         try
             @eval using $(Symbol(pkg))
         catch 
-            inport pkgPkg.add(pkg)
+            Pkg.add(pkg)
             @eval using $(Symbol(pkg))
         end
     end
+    
 end
 
 # Call the function to install and load packages
 
 install_and_load_packages(packages)
+
